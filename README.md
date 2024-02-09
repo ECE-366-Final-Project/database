@@ -1,1 +1,1 @@
-# database
+# SQL Database for Cooper Casino
