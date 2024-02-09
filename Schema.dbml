@@ -1,3 +1,6 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
 Table user {
   username varchar(16) [not null, unique]
   user_id integer [primary key] // from a sequence
@@ -7,7 +10,7 @@ Table user {
 
 Table transaction_history {
   transaction_id integer [primary key] // from a sequence
-  user_id integer [ref: < user.user_id, not null]
+  user_id integer [ref: > user.user_id, not null]
   trasaction_type enum('deposit', 'withdrawal') [not null]
   amount numeric(19, 2) [not null]
 }
@@ -15,7 +18,7 @@ Table transaction_history {
 Table games {
   game_id integer [primary key] // from a sequence
   game_type enum('blackjack', 'slots') [not null]
-  user_id integer [ref: < user.user_id, not null]
+  user_id integer [ref: > user.user_id, not null]
   bet numeric(19, 2) [not null]
   active bool [not null]
   winnings numeric(19, 2) [default: null]
@@ -28,11 +31,11 @@ Table slots_symbols {
 
 Table slots {
   game_id integer [primary key, ref: - games.game_id, not null]
-  user_id integer [ref: < user.user_id, not null]
+  user_id integer [ref: > user.user_id, not null]
   bet numeric(19, 2) [not null]
-  roll_1 integer [ref: < slots_symbols.symbol_id, not null]
-  roll_2 integer [ref: < slots_symbols.symbol_id, not null]
-  roll_3 integer [ref: < slots_symbols.symbol_id, not null]
+  roll_1 integer [ref: > slots_symbols.symbol_id, not null]
+  roll_2 integer [ref: > slots_symbols.symbol_id, not null]
+  roll_3 integer [ref: > slots_symbols.symbol_id, not null]
   winnings numeric(19, 2) [default: null]
 }
 
@@ -108,32 +111,32 @@ Table card {
 
 Table blackjack {
   game_id integer [primary key, ref: - games.game_id, unique, not null]
-  user_id integer [ref:  < user.user_id, not null]
+  user_id integer [ref:  > user.user_id, not null]
   bet numeric(19, 2) [not null]
 
   // player's hand
-  player_card_1 integer [ref: < card.card_id, not null]
-  player_card_2 integer [ref: < card.card_id, not null]
-  player_card_3 integer [ref: < card.card_id, default: null]
-  player_card_4 integer [ref: < card.card_id, default: null]
-  player_card_5 integer [ref: < card.card_id, default: null]
-  player_card_6 integer [ref: < card.card_id, default: null]
-  player_card_7 integer [ref: < card.card_id, default: null]
-  player_card_8 integer [ref: < card.card_id, default: null]
-  player_card_9 integer [ref: < card.card_id, default: null]
-  player_card_10 integer [ref: < card.card_id, default: null]
-  player_card_11 integer [ref: < card.card_id, default: null]
+  player_card_1 integer [ref: > card.card_id, not null]
+  player_card_2 integer [ref: > card.card_id, not null]
+  player_card_3 integer [ref: > card.card_id, default: null]
+  player_card_4 integer [ref: > card.card_id, default: null]
+  player_card_5 integer [ref: > card.card_id, default: null]
+  player_card_6 integer [ref: > card.card_id, default: null]
+  player_card_7 integer [ref: > card.card_id, default: null]
+  player_card_8 integer [ref: > card.card_id, default: null]
+  player_card_9 integer [ref: > card.card_id, default: null]
+  player_card_10 integer [ref: > card.card_id, default: null]
+  player_card_11 integer [ref: > card.card_id, default: null]
 
   // dealer's hand
-  dealer_card_1 integer [ref: < card.card_id, not null]
-  dealer_card_2 integer [ref: < card.card_id, not null]
-  dealer_card_3 integer [ref: < card.card_id, default: null]
-  dealer_card_4 integer [ref: < card.card_id, default: null]
-  dealer_card_5 integer [ref: < card.card_id, default: null]
-  dealer_card_6 integer [ref: < card.card_id, default: null]
-  dealer_card_7 integer [ref: < card.card_id, default: null]
-  dealer_card_8 integer [ref: < card.card_id, default: null]
-  dealer_card_9 integer [ref: < card.card_id, default: null]
-  dealer_card_10 integer [ref: < card.card_id, default: null]
-  dealer_card_11 integer [ref: < card.card_id, default: null]
+  dealer_card_1 integer [ref: > card.card_id, not null]
+  dealer_card_2 integer [ref: > card.card_id, not null]
+  dealer_card_3 integer [ref: > card.card_id, default: null]
+  dealer_card_4 integer [ref: > card.card_id, default: null]
+  dealer_card_5 integer [ref: > card.card_id, default: null]
+  dealer_card_6 integer [ref: > card.card_id, default: null]
+  dealer_card_7 integer [ref: > card.card_id, default: null]
+  dealer_card_8 integer [ref: > card.card_id, default: null]
+  dealer_card_9 integer [ref: > card.card_id, default: null]
+  dealer_card_10 integer [ref: > card.card_id, default: null]
+  dealer_card_11 integer [ref: > card.card_id, default: null]
 }
