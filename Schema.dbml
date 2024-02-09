@@ -1,0 +1,139 @@
+Table user {
+  username varchar(16) [not null, unique]
+  user_id integer [primary key] // from a sequence
+  balance numeric(19, 2) [not null, default: 0]
+  created_at timestamp [not null]
+}
+
+Table transaction_history {
+  transaction_id integer [primary key] // from a sequence
+  user_id integer [ref: < user.user_id, not null]
+  trasaction_type enum('deposit', 'withdrawal') [not null]
+  amount numeric(19, 2) [not null]
+}
+
+Table games {
+  game_id integer [primary key] // from a sequence
+  game_type enum('blackjack', 'slots') [not null]
+  user_id integer [ref: < user.user_id, not null]
+  bet numeric(19, 2) [not null]
+  active bool [not null]
+  winnings numeric(19, 2) [default: null]
+}
+
+Table slots_symbols {
+  symbol_id integer [primary key]
+  symbol_name varchar(20) [unique, not null]
+}
+
+Table slots {
+  game_id integer [primary key, ref: - games.game_id, not null]
+  user_id integer [ref: < user.user_id, not null]
+  bet numeric(19, 2) [not null]
+  roll_1 integer [ref: < slots_symbols.symbol_id, not null]
+  roll_2 integer [ref: < slots_symbols.symbol_id, not null]
+  roll_3 integer [ref: < slots_symbols.symbol_id, not null]
+  winnings numeric(19, 2) [default: null]
+}
+
+Table card {
+  card_id integer [primary key]
+  suit enum('hearts', 'spades', 'diamonds', 'clubs') [not null]
+  val enum('ace', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'jack', 'queen', 'king') [not null]
+
+  /*
+    CREATE SEQUENCE card_id_seq
+      START WITH 1
+      INCREMENT BY 1
+      MAXVALUE 52;
+
+    INSERT INTO cards (card_id, suit, val)
+      VALUES
+        (card_id_seq.nextval, 'hearts','ace')
+        (card_id_seq.nextval, 'spades', 'ace')
+        (card_id_seq.nextval, 'diamonds', 'ace')
+        (card_id_seq.nextval, 'clubs', 'ace')
+        (card_id_seq.nextval, 'hearts','two')
+        (card_id_seq.nextval, 'spades', 'two')
+        (card_id_seq.nextval, 'diamonds', 'two')
+        (card_id_seq.nextval, 'clubs', 'two')
+        (card_id_seq.nextval, 'hearts','three')
+        (card_id_seq.nextval, 'spades', 'three')
+        (card_id_seq.nextval, 'diamonds', 'three')
+        (card_id_seq.nextval, 'clubs', 'three')
+        (card_id_seq.nextval, 'hearts','four')
+        (card_id_seq.nextval, 'spades', 'four')
+        (card_id_seq.nextval, 'diamonds', 'four')
+        (card_id_seq.nextval, 'clubs', 'four')
+        (card_id_seq.nextval, 'hearts','five')
+        (card_id_seq.nextval, 'spades', 'five')
+        (card_id_seq.nextval, 'diamonds', 'five')
+        (card_id_seq.nextval, 'clubs', 'five')
+        (card_id_seq.nextval, 'hearts','six')
+        (card_id_seq.nextval, 'spades', 'six')
+        (card_id_seq.nextval, 'diamonds', 'six')
+        (card_id_seq.nextval, 'clubs', 'six')
+        (card_id_seq.nextval, 'hearts','seven')
+        (card_id_seq.nextval, 'spades', 'seven')
+        (card_id_seq.nextval, 'diamonds', 'seven')
+        (card_id_seq.nextval, 'clubs', 'seven')
+        (card_id_seq.nextval, 'hearts','eight')
+        (card_id_seq.nextval, 'spades', 'eight')
+        (card_id_seq.nextval, 'diamonds', 'eight')
+        (card_id_seq.nextval, 'clubs', 'eight')
+        (card_id_seq.nextval, 'hearts','nine')
+        (card_id_seq.nextval, 'spades', 'nine')
+        (card_id_seq.nextval, 'diamonds', 'nine')
+        (card_id_seq.nextval, 'clubs', 'nine')
+        (card_id_seq.nextval, 'hearts','ten')
+        (card_id_seq.nextval, 'spades', 'ten')
+        (card_id_seq.nextval, 'diamonds', 'ten')
+        (card_id_seq.nextval, 'clubs', 'ten')
+        (card_id_seq.nextval, 'hearts','jack')
+        (card_id_seq.nextval, 'spades', 'jack')
+        (card_id_seq.nextval, 'diamonds', 'jack')
+        (card_id_seq.nextval, 'clubs', 'jack')
+        (card_id_seq.nextval, 'hearts','queen')
+        (card_id_seq.nextval, 'spades', 'queen')
+        (card_id_seq.nextval, 'diamonds', 'queen')
+        (card_id_seq.nextval, 'clubs', 'queen')
+        (card_id_seq.nextval, 'hearts','king')
+        (card_id_seq.nextval, 'spades', 'king')
+        (card_id_seq.nextval, 'diamonds', 'king')
+        (card_id_seq.nextval, 'clubs', 'king');
+  */
+}
+
+
+
+Table blackjack {
+  game_id integer [primary key, ref: - games.game_id, unique, not null]
+  user_id integer [ref:  < user.user_id, not null]
+  bet numeric(19, 2) [not null]
+
+  // player's hand
+  player_card_1 integer [ref: < card.card_id, not null]
+  player_card_2 integer [ref: < card.card_id, not null]
+  player_card_3 integer [ref: < card.card_id, default: null]
+  player_card_4 integer [ref: < card.card_id, default: null]
+  player_card_5 integer [ref: < card.card_id, default: null]
+  player_card_6 integer [ref: < card.card_id, default: null]
+  player_card_7 integer [ref: < card.card_id, default: null]
+  player_card_8 integer [ref: < card.card_id, default: null]
+  player_card_9 integer [ref: < card.card_id, default: null]
+  player_card_10 integer [ref: < card.card_id, default: null]
+  player_card_11 integer [ref: < card.card_id, default: null]
+
+  // dealer's hand
+  dealer_card_1 integer [ref: < card.card_id, not null]
+  dealer_card_2 integer [ref: < card.card_id, not null]
+  dealer_card_3 integer [ref: < card.card_id, default: null]
+  dealer_card_4 integer [ref: < card.card_id, default: null]
+  dealer_card_5 integer [ref: < card.card_id, default: null]
+  dealer_card_6 integer [ref: < card.card_id, default: null]
+  dealer_card_7 integer [ref: < card.card_id, default: null]
+  dealer_card_8 integer [ref: < card.card_id, default: null]
+  dealer_card_9 integer [ref: < card.card_id, default: null]
+  dealer_card_10 integer [ref: < card.card_id, default: null]
+  dealer_card_11 integer [ref: < card.card_id, default: null]
+}
