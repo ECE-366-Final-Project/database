@@ -3,20 +3,20 @@
 
 Table user {
   username varchar(16) [not null, unique]
-  user_id integer [primary key] // from a sequence
+  user_id integer [primary key] // from a sequence or AUTO_INCREMENT
   balance numeric(19, 2) [not null, default: 0]
   created_at timestamp [not null]
 }
 
 Table transaction_history {
-  transaction_id integer [primary key] // from a sequence
+  transaction_id integer [primary key] // from a sequence or AUTO_INCREMENT
   user_id integer [ref: > user.user_id, not null]
   trasaction_type enum('deposit', 'withdrawal') [not null]
   amount numeric(19, 2) [not null]
 }
 
 Table games {
-  game_id integer [primary key] // from a sequence
+  game_id integer [primary key] // from a sequence or AUTO_INCREMENT
   game_type enum('blackjack', 'slots') [not null]
   user_id integer [ref: > user.user_id, not null]
   bet numeric(19, 2) [not null]
@@ -33,9 +33,9 @@ Table slots {
   game_id integer [primary key, ref: - games.game_id, not null]
   user_id integer [ref: > user.user_id, not null]
   bet numeric(19, 2) [not null]
-  roll_1 integer [ref: > slots_symbols.symbol_id, not null]
-  roll_2 integer [ref: > slots_symbols.symbol_id, not null]
-  roll_3 integer [ref: > slots_symbols.symbol_id, not null]
+  roll_1 integer [ref: > slots_symbols.symbol_id, default: null]
+  roll_2 integer [ref: > slots_symbols.symbol_id, default: null]
+  roll_3 integer [ref: > slots_symbols.symbol_id, default: null]
   winnings numeric(19, 2) [default: null]
 }
 
@@ -43,6 +43,19 @@ Table card {
   card_id integer [primary key]
   suit enum('hearts', 'spades', 'diamonds', 'clubs') [not null]
   val enum('ace', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'jack', 'queen', 'king') [not null]
+
+  /*
+    Table card_suit {
+      ...
+    }
+
+    Table card_value {
+
+    }
+
+    SELECT * FROM ___ CROSS JOIN ... INTO ...
+
+  */
 
   /*
     CREATE SEQUENCE card_id_seq
