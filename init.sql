@@ -16,6 +16,9 @@ CREATE TABLE IF NOT EXISTS "transaction_history" (
   "user_id" integer NOT NULL,
   "trasaction_type" transactionType_ENUM NOT NULL,
   "amount" numeric(19,2) NOT NULL
+  CONSTRAINT fk_user_id
+    FOREIGN KEY(user_id)
+	  REFERENCES user(user_id)
 );
 
 CREATE TYPE gameType_ENUM AS ENUM('blackjack', 'slots');
