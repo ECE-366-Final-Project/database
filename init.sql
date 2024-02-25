@@ -2,7 +2,7 @@
 -- Table: example_table
 -- Column : example_column
 
-CREATE TABLE "user" (
+CREATE TABLE IF NOT EXISTS "user" (
   "username" varchar(16) UNIQUE NOT NULL,
   "user_id" SERIAL PRIMARY KEY,
   "balance" numeric(19,2) NOT NULL DEFAULT 0,
@@ -11,7 +11,7 @@ CREATE TABLE "user" (
 
 CREATE TYPE transactionType_ENUM as enum('deposit', 'withdrawal');
 
-CREATE TABLE "transaction_history" (
+CREATE TABLE IF NOT EXISTS "transaction_history" (
   "transaction_id" SERIAL PRIMARY KEY,
   "user_id" integer NOT NULL,
   "trasaction_type" transactionType_ENUM NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE "transaction_history" (
 
 CREATE TYPE gameType_ENUM AS ENUM('blackjack', 'slots');
 
-CREATE TABLE "games" (
+CREATE TABLE IF NOT EXISTS "games" (
   "game_id" SERIAL PRIMARY KEY,
   "game_type" gameType_ENUM NOT NULL,
   "user_id" integer NOT NULL,
@@ -29,12 +29,12 @@ CREATE TABLE "games" (
   "winnings" numeric(19,2) DEFAULT null
 );
 
-CREATE TABLE "slots_symbols" (
+CREATE TABLE IF NOT EXISTS "slots_symbols" (
   "symbol_id" SERIAL PRIMARY KEY,
   "symbol_name" varchar(20) UNIQUE NOT NULL
 );
 
-CREATE TABLE "slots_payouts" (
+CREATE TABLE IF NOT EXISTS "slots_payouts" (
   "payout_id" SERIAL PRIMARY KEY,
   "payout" numeric(10,5) NOT NULL DEFAULT 1,
   "roll_1" integer DEFAULT null,
@@ -42,7 +42,7 @@ CREATE TABLE "slots_payouts" (
   "roll_3" integer DEFAULT null
 );
 
-CREATE TABLE "slots" (
+CREATE TABLE IF NOT EXISTS "slots" (
   "game_id" integer PRIMARY KEY NOT NULL,
   "user_id" integer NOT NULL,
   "bet" numeric(19,2) NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE "slots" (
   "winnings" numeric(19,2) DEFAULT null
 );
 
-CREATE TABLE "blackjack" (
+CREATE TABLE IF NOT EXISTS "blackjack" (
   "game_id" integer UNIQUE PRIMARY KEY NOT NULL,
   "user_id" integer NOT NULL,
   "bet" numeric(19,2) NOT NULL,
