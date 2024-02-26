@@ -33,12 +33,12 @@ CREATE TABLE IF NOT EXISTS "games" (
 );
 
 CREATE TABLE IF NOT EXISTS "slots_symbols" (
-  "symbol_id" SERIAL PRIMARY KEY,
+  "symbol_id" PRIMARY KEY,
   "symbol_name" varchar(20) UNIQUE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "slots_payouts" (
-  "payout_id" SERIAL PRIMARY KEY,
+  "payout_id" PRIMARY KEY,
   "payout" numeric(10,5) NOT NULL DEFAULT 1,
   "roll_1" integer DEFAULT null,
   "roll_2" integer DEFAULT null,
