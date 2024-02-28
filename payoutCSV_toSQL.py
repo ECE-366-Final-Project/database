@@ -18,26 +18,29 @@ symbols = [x[:-1] for x in open("slots_symbols.txt", "r").readlines()]
 i = 0
 
 for symbol in symbols:
-    long_string += "\t(\'"+str(i)+", "+symbol+"\'),\n"
+    long_string += "\t("+str(i)+", \'"+symbol+"\'),\n"
     i += 1
     
-long_string = long_string[:-2]+";\n\n\n"
+long_string = long_string[:-2]+"\n"
+long_string += "ON conflict (symbol_id) do nothing;\n\n\n"
+
 
 lines = [x[:-1].split(',') for x in open("payouts.csv", "r").readlines()[1:]]
 
 
 
-long_string += "INSERT INTO slots_payouts(payout_id, roll_1, roll_2, roll_3, payout)\nVALUES\n"
+long_string += "INSERT INTO slots_payouts(payout_id, payout)\nVALUES\n"
 
 for line in lines:
     long_string += "\t("
     long_string += str((symbols.index(line[0]))*100+(symbols.index(line[1]))*10+symbols.index(line[2])) + ", "
-    long_string += str(symbols.index(line[0])) + ", "
-    long_string += str(symbols.index(line[1])) + ", "
-    long_string += str(symbols.index(line[2])) + ", "
+    # long_string += str(symbols.index(line[0])) + ", "
+    # long_string += str(symbols.index(line[1])) + ", "
+    # long_string += str(symbols.index(line[2])) + ", "
     long_string += line[3]+"),\n"
 
-long_string = long_string[:-2]+";\n"
+long_string = long_string[:-2]+"\n"
+long_string += "ON conflict (payout_id) do nothing;\n"
 
 output = open(input("Output File Name: "), "w")
 output.writelines(long_string)
