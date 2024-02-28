@@ -41,10 +41,9 @@ CREATE TABLE IF NOT EXISTS "slots" (
   -- "game_id" integer PRIMARY KEY NOT NULL,
   "slots_game_id" SERIAL PRIMARY KEY,
   "user_id" integer NOT NULL,
-  "active" boolean NOT NULL,
   "bet" numeric(19,2) NOT NULL,
-  "payout_id" integer,
-  "winnings" numeric(19,2) DEFAULT null
+  "payout_id" integer NOT NULL,
+  "winnings" numeric(19,2) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "blackjack" (
