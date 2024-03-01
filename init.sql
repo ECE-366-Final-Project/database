@@ -38,7 +38,9 @@ CREATE TABLE IF NOT EXISTS "blackjack" (
   "blackjack_game_id" SERIAL PRIMARY KEY,
   "user_id" integer NOT NULL,
   "bet" numeric(19,2) NOT null,
-  "active" boolean not null,
+  -- winnings or result(i.e. blackjack, stood and lost, etc...);
+  "winnings" numeric(19, 2) default null,
+  "active" boolean not null default true,
   "player_hand" varchar(22) default null,
   "dealer_hand" varchar(22) default null
 );
