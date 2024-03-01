@@ -11,21 +11,10 @@ CREATE TABLE IF NOT EXISTS "user" (
 
 CREATE TABLE IF NOT EXISTS "transaction_history" (
   "transaction_id" SERIAL PRIMARY KEY,
-  "user_id" integer NOT NULL,
+  "user_id" integer NOT null REFERENCES "user" ("user_id"),
   "trasaction_type" varchar(16) NOT NULL,
   "amount" numeric(19,2) NOT NULL
 );
-
--- CREATE TYPE gameType_ENUM AS ENUM('blackjack', 'slots');
-
--- CREATE TABLE IF NOT EXISTS "games" (
---   "game_id" SERIAL PRIMARY KEY,
---   "game_type" gameType_ENUM NOT NULL,
---   "user_id" integer NOT NULL,
---   "bet" numeric(19,2) NOT NULL,
---   "active" bool NOT NULL,
---   "winnings" numeric(19,2) DEFAULT null
--- );
 
 CREATE TABLE IF NOT EXISTS "slots_symbols" (
   "symbol_id" integer PRIMARY KEY,
@@ -38,40 +27,37 @@ CREATE TABLE IF NOT EXISTS "slots_payouts" (
 );
 
 CREATE TABLE IF NOT EXISTS "slots" (
-  -- "game_id" integer PRIMARY KEY NOT NULL,
   "slots_game_id" SERIAL PRIMARY KEY,
-  "user_id" integer NOT NULL,
+  "user_id" integer NOT null REFERENCES "user" ("user_id"),
   "bet" numeric(19,2) NOT NULL,
-  "payout_id" integer NOT NULL,
+  "payout_id" integer NOT null REFERENCES "slots_payouts" ("payout_id"),
   "winnings" numeric(19,2) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "blackjack" (
-  -- "game_id" integer UNIQUE PRIMARY KEY NOT NULL,
   "blackjack_game_id" SERIAL PRIMARY KEY,
   "user_id" integer NOT NULL,
-  "active" boolean NOT NULL,
-  "bet" numeric(19,2) NOT NULL,
-  "player_hand" varchar(22) DEFAULT null,
-  "dealer_hand" varchar(22) DEFAULT null
+  "bet" numeric(19,2) NOT null,
+  "active" boolean not null,
+  "player_hand" varchar(22) default null,
+  "dealer_hand" varchar(22) default null
 );
 
-ALTER TABLE "transaction_history" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("user_id");
+CREATE TABLE IF NOT EXISTS "active_blackjack_games" (
+  "user_id" integer PRIMARY key REFERENCES "user" ("user_id"),
+  "active" boolean NOT NULL,
+  "bet" numeric(19,2) NOT null,
+  "deck" varchar(104) not null,
+  "player_hand" varchar(22) not null,
+  "dealer_hand" varchar(22) not null
+);
 
--- ALTER TABLE "games" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("user_id");
-
---ALTER TABLE "slots_payouts" ADD FOREIGN KEY ("roll_1") REFERENCES "slots_symbols" ("symbol_id");
-
---ALTER TABLE "slots_payouts" ADD FOREIGN KEY ("roll_2") REFERENCES "slots_symbols" ("symbol_id");
-
---ALTER TABLE "slots_payouts" ADD FOREIGN KEY ("roll_3") REFERENCES "slots_symbols" ("symbol_id");
-
--- ALTER TABLE "slots" ADD FOREIGN KEY ("game_id") REFERENCES "games" ("game_id");
-
-ALTER TABLE "slots" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("user_id");
-
-ALTER TABLE "slots" ADD FOREIGN KEY ("payout_id") REFERENCES "slots_payouts" ("payout_id");
-
--- ALTER TABLE "blackjack" ADD FOREIGN KEY ("game_id") REFERENCES "games" ("game_id");
-
-ALTER TABLE "blackjack" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("user_id");
+--ALTER TABLE "active_blackjack_games" ADD FOREIGN KEY ("user_id) REFERENCES "user" ("user_id")
+--
+--ALTER TABLE "transaction_history" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("user_id");
+--
+--ALTER TABLE "slots" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("user_id");
+--
+--ALTER TABLE "slots" ADD FOREIGN KEY ("payout_id") REFERENCES "slots_payouts" ("payout_id");
+--
+--ALTER TABLE "blackjack" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("user_id");
