@@ -75,3 +75,6 @@ ALTER TABLE "slots" ADD FOREIGN KEY ("payout_id") REFERENCES "slots_payouts" ("p
 -- ALTER TABLE "blackjack" ADD FOREIGN KEY ("game_id") REFERENCES "games" ("game_id");
 
 ALTER TABLE "blackjack" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("user_id");
+
+-- add admin user for testing purposes
+INSERT INTO public.user(username, balance, created_at) VALUES ('admin', 0, NOW());
