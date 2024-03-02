@@ -54,34 +54,6 @@ CREATE TABLE IF NOT EXISTS "active_blackjack_games" (
   "dealer_hand" varchar(22) not null
 );
 
--- ALTER TABLE "games" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("user_id");
-
---ALTER TABLE "slots_payouts" ADD FOREIGN KEY ("roll_1") REFERENCES "slots_symbols" ("symbol_id");
-
---ALTER TABLE "slots_payouts" ADD FOREIGN KEY ("roll_2") REFERENCES "slots_symbols" ("symbol_id");
-
---ALTER TABLE "slots_payouts" ADD FOREIGN KEY ("roll_3") REFERENCES "slots_symbols" ("symbol_id");
-
--- ALTER TABLE "slots" ADD FOREIGN KEY ("game_id") REFERENCES "games" ("game_id");
-
-ALTER TABLE "slots" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("user_id");
-
-ALTER TABLE "slots" ADD FOREIGN KEY ("payout_id") REFERENCES "slots_payouts" ("payout_id");
-
--- ALTER TABLE "blackjack" ADD FOREIGN KEY ("game_id") REFERENCES "games" ("game_id");
-
-ALTER TABLE "blackjack" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("user_id");
-
 -- add admin user for testing purposes
 INSERT INTO public.user(username, created_at) VALUES ('admin', NOW()) 
 	ON conflict (username) do nothing;
-
---ALTER TABLE "active_blackjack_games" ADD FOREIGN KEY ("user_id) REFERENCES "user" ("user_id")
---
---ALTER TABLE "transaction_history" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("user_id");
---
---ALTER TABLE "slots" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("user_id");
---
---ALTER TABLE "slots" ADD FOREIGN KEY ("payout_id") REFERENCES "slots_payouts" ("payout_id");
---
---ALTER TABLE "blackjack" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("user_id");
