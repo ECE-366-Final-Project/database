@@ -47,7 +47,6 @@ CREATE TABLE IF NOT EXISTS "blackjack" (
 
 CREATE TABLE IF NOT EXISTS "active_blackjack_games" (
   "user_id" integer PRIMARY key REFERENCES "user" ("user_id"),
-  "active" boolean NOT NULL,
   "bet" numeric(19,2) NOT null,
   "deck" varchar(104) not null,
   "player_hand" varchar(22) not null,
