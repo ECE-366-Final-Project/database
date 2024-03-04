@@ -1,4 +1,5 @@
-INSERT INTO slots_symbols(symbol_id, symbol_name) VALUES
+INSERT INTO slots_symbols(symbol_id, symbol_name)
+VALUES
 	(0, '1X BAR'),
 	(1, '2X BAR'),
 	(2, '3X BAR'),
@@ -9,10 +10,11 @@ INSERT INTO slots_symbols(symbol_id, symbol_name) VALUES
 	(7, 'GEM'),
 	(8, 'JACKPOT'),
 	(9, 'LEMON')
-ON CONFLICT (symbol_id) DO NOTHING;
+ON conflict (symbol_id) do nothing;
 
 
-INSERT INTO slots_payouts(payout_id, payout) VALUES
+INSERT INTO slots_payouts(payout_id, payout)
+VALUES
 	(0, 11.11111),
 	(1, 1.33333),
 	(2, 1.44444),
@@ -1013,4 +1015,4 @@ INSERT INTO slots_payouts(payout_id, payout) VALUES
 	(997, 0.0),
 	(998, 0.0),
 	(999, 5.0)
-ON CONFLICT (payout_id) DO NOTHING;
+ON conflict (payout_id) do nothing;
