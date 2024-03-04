@@ -6,13 +6,14 @@ CREATE TABLE IF NOT EXISTS "user" (
   "username" varchar(16) UNIQUE NOT NULL,
   "user_id" SERIAL PRIMARY KEY,
   "balance" numeric(19,2) NOT NULL DEFAULT 0,
-  "created_at" timestamp NOT NULL
+  "created_at" timestamp NOT NULL,
+  "active" boolean NOT NULL DEFAULT true
 );
 
 CREATE TABLE IF NOT EXISTS "transaction_history" (
   "transaction_id" SERIAL PRIMARY KEY,
   "user_id" integer NOT null REFERENCES "user" ("user_id"),
-  "trasaction_type" varchar(16) NOT NULL,
+  "transaction_type" varchar(16) NOT NULL,
   "amount" numeric(19,2) NOT NULL
 );
 
