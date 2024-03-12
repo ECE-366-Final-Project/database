@@ -3,17 +3,16 @@
 -- Column : example_column
 
 CREATE TABLE IF NOT EXISTS "user" (
-    "UUID" varchar(64) PRIMARY KEY,
+    "username" varchar(16) PRIMARY KEY,
     "passkey" varchar(64) NOT NULL,
     "balance" numeric(19, 2) NOT NULL DEFAULT 0,
     "created_at" timestamp NOT NULL,
-    "session_token" varchar(64) DEFAULT null,
     CHECK ("balance" >= 0)
 );
 
 CREATE TABLE IF NOT EXISTS "transaction_history" (
     "transaction_id" serial PRIMARY KEY,
-    "UUID" varchar(64) NOT NULL REFERENCES "user" ("UUID"),
+    "username" varchar(16) NOT NULL REFERENCES "user" ("username"),
     "transaction_type" varchar(16) NOT NULL,
     "amount" numeric(19, 2) NOT NULL
 );
@@ -30,7 +29,7 @@ CREATE TABLE IF NOT EXISTS "slots_payouts" (
 
 CREATE TABLE IF NOT EXISTS "slots" (
     "slots_game_id" serial PRIMARY KEY,
-    "UUID" varchar(64) NOT NULL REFERENCES "user" ("UUID"),
+    "username" varchar(16) NOT NULL REFERENCES "user" ("username"),
     "bet" numeric(19, 2) NOT NULL,
     "payout_id" integer NOT NULL REFERENCES "slots_payouts" ("payout_id"),
     "winnings" numeric(19, 2) NOT NULL,
@@ -39,7 +38,7 @@ CREATE TABLE IF NOT EXISTS "slots" (
 
 CREATE TABLE IF NOT EXISTS "blackjack" (
     "blackjack_game_id" serial PRIMARY KEY,
-    "UUID" varchar(64) NOT NULL REFERENCES "user" ("UUID"),
+    "username" varchar(16) NOT NULL REFERENCES "user" ("username"),
     "bet" numeric(19, 2) NOT NULL,
     -- winnings or result(i.e. blackjack, stood and lost, etc...);
     "winnings" numeric(19, 2) DEFAULT null,
@@ -50,7 +49,7 @@ CREATE TABLE IF NOT EXISTS "blackjack" (
 );
 
 CREATE TABLE IF NOT EXISTS "active_blackjack_games" (
-    "UUID" varchar(64) PRIMARY KEY REFERENCES "user" ("UUID"),
+    "username" varchar(16) PRIMARY KEY REFERENCES "user" ("username"),
     "bet" numeric(19, 2) NOT NULL,
     "deck" varchar(104) NOT NULL,
     "player_hand" varchar(22) NOT NULL,
@@ -59,5 +58,5 @@ CREATE TABLE IF NOT EXISTS "active_blackjack_games" (
 );
 
 -- add admin user for testing purposes
-INSERT INTO public.user("UUID", created_at, passkey) VALUES ('admin', NOW(), 'password')
-	  ON CONFLICT ("UUID") DO NOTHING;
+INSERT INTO public.user("username", created_at, passkey) VALUES ('admin', NOW(), 'a194bdec76518adb19cf65ad47f3b5be2266e3058ff8a630e5b68d4630de3578')
+	  ON CONFLICT ("username") DO NOTHING;
