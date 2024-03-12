@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS "slots" (
     "UUID" varchar(64) NOT NULL REFERENCES "user" ("UUID"),
     "bet" numeric(19, 2) NOT NULL,
     "payout_id" integer NOT NULL REFERENCES "slots_payouts" ("payout_id"),
-    "winnings" numeric(19, 2) NOT null,
+    "winnings" numeric(19, 2) NOT NULL,
     CHECK ("bet" > 0)
 );
 
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS "active_blackjack_games" (
     "bet" numeric(19, 2) NOT NULL,
     "deck" varchar(104) NOT NULL,
     "player_hand" varchar(22) NOT NULL,
-    "dealer_hand" varchar(22) NOT null,
+    "dealer_hand" varchar(22) NOT NULL,
     CHECK ("bet" > 0)
 );
 
