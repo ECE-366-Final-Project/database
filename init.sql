@@ -58,5 +58,6 @@ CREATE TABLE IF NOT EXISTS "active_blackjack_games" (
 );
 
 -- add admin user for testing purposes
-INSERT INTO public.user("username", created_at, passkey) VALUES ('admin', NOW(), 'a194bdec76518adb19cf65ad47f3b5be2266e3058ff8a630e5b68d4630de3578')
+INSERT INTO public.user("username", created_at, passkey) VALUES ('admin', NOW(), '170ffa3b63148dce14912b378ff5c1e8b1108bdb73841723a335a01ec91ac6a8
+')
 	  ON CONFLICT ("username") DO NOTHING;
