@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS "roulette" (
 	"username" varchar(16) REFERENCES "user" ("username"),
 	"rolled_number" smallint NOT NULL,
 	"winnings" numeric(19, 2) NOT NULL,
-	"bet_json" json
+	"bet_json" varchar(1024)
 );
 
 
