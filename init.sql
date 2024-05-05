@@ -60,9 +60,11 @@ CREATE TABLE IF NOT EXISTS "active_blackjack_games" (
 CREATE TABLE IF NOT EXISTS "roulette" (
     "roulette_game_id" serial PRIMARY KEY,
 	"username" varchar(16) REFERENCES "user" ("username"),
+	"bet" numeric(19, 2) NOT NULL,
 	"rolled_number" smallint NOT NULL,
 	"winnings" numeric(19, 2) NOT NULL,
-	"bet_json" varchar(1024)
+	"bet_json" varchar(1024),
+	"lobby_id" varchar(20) NOT NULL
 );
 
 
