@@ -60,6 +60,17 @@ CREATE TABLE IF NOT EXISTS "active_blackjack_games" (
     CHECK ("bet" > 0)
 );
 
+CREATE TABLE IF NOT EXISTS "roulette" (
+    "roulette_game_id" serial PRIMARY KEY,
+	"username" varchar(16) REFERENCES "user" ("username"),
+	"bet" numeric(19, 2) NOT NULL,
+	"rolled_number" smallint NOT NULL,
+	"winnings" numeric(19, 2) NOT NULL,
+	"bet_json" varchar(1024),
+	-- "lobby_id" varchar(40) DEFAULT '-1' NOT NULL,
+	--"ttl" varchar(40) DEFAULT '-1' NOT NULL
+);
+
 -- add admin user for testing purposes
 INSERT INTO public.user(username, passkey) VALUES ('admin', '170ffa3b63148dce14912b378ff5c1e8b1108bdb73841723a335a01ec91ac6a8')
 	  ON CONFLICT ("username") DO NOTHING;
