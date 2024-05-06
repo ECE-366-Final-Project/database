@@ -64,7 +64,8 @@ CREATE TABLE IF NOT EXISTS "roulette" (
 	"rolled_number" smallint NOT NULL,
 	"winnings" numeric(19, 2) NOT NULL,
 	"bet_json" varchar(1024),
-	"lobby_id" varchar(40) DEFAULT '-1' NOT NULL
+	"lobby_id" varchar(40) DEFAULT '-1' NOT NULL,
+	"ttl" varchar(40) DEFAULT '-1' NOT NULL
 );
 
 
