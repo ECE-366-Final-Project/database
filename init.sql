@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS "user" (
     "username" varchar(16) PRIMARY KEY,
     "passkey" varchar(64) NOT NULL,
     "balance" numeric(19, 2) NOT NULL DEFAULT 0,
-    "created_at" timestamp NOT NULL,
+    "created_at" timestamp with time zone NOT null default CURRENT_TIMESTAMP,
     CHECK ("balance" >= 0)
 );
 
@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS "transaction_history" (
     "transaction_id" serial PRIMARY KEY,
     "username" varchar(16) NOT NULL REFERENCES "user" ("username"),
     "transaction_type" varchar(16) NOT NULL,
-    "amount" numeric(19, 2) NOT NULL
+    "amount" numeric(19, 2) NOT NULL,
+    "time" timestamp with time zone NOT null default CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS "slots_symbols" (
@@ -33,6 +34,7 @@ CREATE TABLE IF NOT EXISTS "slots" (
     "bet" numeric(19, 2) NOT NULL,
     "payout_id" integer NOT NULL REFERENCES "slots_payouts" ("payout_id"),
     "winnings" numeric(19, 2) NOT NULL,
+    "time" timestamp with time zone NOT null default CURRENT_TIMESTAMP,
     CHECK ("bet" > 0)
 );
 
@@ -45,6 +47,7 @@ CREATE TABLE IF NOT EXISTS "blackjack" (
     "active" boolean NOT NULL DEFAULT true,
     "player_hand" varchar(22) DEFAULT null,
     "dealer_hand" varchar(22) DEFAULT null,
+    "time" timestamp with time zone NOT null default CURRENT_TIMESTAMP,
     CHECK ("bet" > 0)
 );
 
@@ -68,6 +71,6 @@ CREATE TABLE IF NOT EXISTS "roulette" (
 	--"ttl" varchar(40) DEFAULT '-1' NOT NULL
 );
 
-
-INSERT INTO public.user("username", created_at, passkey) VALUES ('admin', NOW(), '170ffa3b63148dce14912b378ff5c1e8b1108bdb73841723a335a01ec91ac6a8')
+-- add admin user for testing purposes
+INSERT INTO public.user(username, passkey) VALUES ('admin', '170ffa3b63148dce14912b378ff5c1e8b1108bdb73841723a335a01ec91ac6a8')
 	  ON CONFLICT ("username") DO NOTHING;
